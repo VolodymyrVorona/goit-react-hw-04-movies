@@ -1,0 +1,40 @@
+.wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.contentWrapper {
+  width: 500px;
+  padding: 20px;
+}
+
+.genres,
+.overview,
+.title {
+  font-weight: bold;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.genres,
+.overview {
+  font-size: 18px;
+}
+
+.titleData {
+  margin-left: 10px;
+}
+
+.genres,
+.overview,
+.popularity,
+.description,
+.title {
+  margin-bottom: 12px;
+}
+
+.genresItem:not(:last-child) {
+  margin-right: 10px;
+}

@@ -3,25 +3,30 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 
 export async function getTrends() {
   const response = await fetch(
-    `${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=ru-RU`,
+    `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`,
   );
 
   return response.ok
     ? await response.json()
-    : Promise.reject(new Error('Not found'));
+    : Promise.reject(new Error('404 Not found'));
 }
 
 export async function getMovieDetail(movieId) {
   const response = await fetch(
-    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=ru-RU&append_to_response=credits,reviews`,
+    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=credits,reviews`,
   );
 
   return response.ok
     ? await response.json()
-    : Promise.reject(new Error('Not found'));
+    : Promise.reject(new Error('404 Not found'));
 }
 
-// release_dates;
-// reviews;
-// append_to_response;
-// credits;
+export async function fetchMoviesByKeyword(searchQuery) {
+  const response = await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${searchQuery}`,
+  );
+
+  return response.ok
+    ? await response.json()
+    : Promise.reject(new Error('404 Not found'));
+}

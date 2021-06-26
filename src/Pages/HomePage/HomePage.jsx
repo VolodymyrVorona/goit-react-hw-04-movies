@@ -1,30 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
 
 import { getTrends } from '../../api/fetchMovies';
+import MovieList from '../../Components/MovieList';
+import Container from '../../Components/Container';
 
 function HomePage() {
-  // const { url } = useRouteMatch();
   const [movies, setMovies] = useState(null);
 
   useEffect(() => {
-    getTrends().then(({ results }) => setMovies(results));
+    getTrends()
+      .then(({ results }) => setMovies(results))
+      .catch(error => console.log(error));
   }, []);
 
-  return (
-    <div>
-      <ul>
-        {movies &&
-          movies.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`}>{title}</Link>
-            </li>
-          ))}
-      </ul>
-    </div>
-  );
+  return <Container>{movies && <MovieList movies={movies} />}</Container>;
 }
 
 export default HomePage;
-
-// 9fc3c617e6344b84dcbc8d0c281e8d2c

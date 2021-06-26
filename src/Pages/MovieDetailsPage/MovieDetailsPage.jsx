@@ -1,12 +1,26 @@
 import { useState, useEffect } from 'react';
-import { useParams, useRouteMatch, NavLink, Route } from 'react-router-dom';
+import {
+  useParams,
+  useRouteMatch,
+  NavLink,
+  Route,
+  Switch,
+} from 'react-router-dom';
+
 import { getMovieDetail } from '../../api/fetchMovies';
+import BookCard from '../../Components/BookCard';
+import Cast from '../../Components/Cast';
+import Reviews from '../../Components/Reviews';
+import Section from '../../Components/Section';
+import Container from '../../Components/Container';
+
+import st from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   const { moviesId } = useParams();
   const match = useRouteMatch();
+
   const [movie, setMovie] = useState(null);
-  console.log(match);
 
   useEffect(() => {
     getMovieDetail(moviesId).then(setMovie);
@@ -15,43 +29,41 @@ const MovieDetailsPage = () => {
   return (
     <>
       {movie && (
-        <div style={{ display: 'flex', padding: '20px' }}>
-          <div>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
-          </div>
+        <Section>
+          <Container>
+            <BookCard movie={movie} />
 
-          <div>
-            <p>
-              {movie.title}
-              <span>{`(${movie.release_date.split('-')[0]})`}</span>
-            </p>
-
-            <p>{movie.overview || 'lsdjf sldkjf lskdjf'}</p>
-
-            <ul style={{ display: 'flex' }}>
-              {movie.genres.map(({ id, name }) => (
-                <li key={id}>{name}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            <div>
+              <NavLink
+                to={`${match.url}/cast`}
+                className={st.subViews}
+                activeClassName={st.active}
+              >
+                Cast
+              </NavLink>
+              <NavLink
+                to={`${match.url}/reviews`}
+                className={st.subViews}
+                activeClassName={st.active}
+              >
+                Reviews
+              </NavLink>
+            </div>
+          </Container>
+        </Section>
       )}
-      <div>
+
+      <Switch>
         <Route path={`${match.path}/cast`}>
-          <NavLink to={`${match.url}/cast`}>Cast</NavLink>
+          {movie && <Cast cast={movie.credits.cast} />}
         </Route>
 
         <Route path={`${match.path}/reviews`}>
-          <NavLink to={`${match.url}/reviews`}>Reviews</NavLink>
+          {movie && <Reviews reviews={movie.reviews.results} />}
         </Route>
-      </div>
+      </Switch>
     </>
   );
 };
 
 export default MovieDetailsPage;
-
-// release_dates;reviews;append_to_response;credits
