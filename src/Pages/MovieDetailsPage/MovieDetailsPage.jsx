@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import {
   useParams,
   useRouteMatch,
+  useLocation,
   NavLink,
+  useHistory,
   Route,
   Switch,
 } from 'react-router-dom';
@@ -18,9 +20,15 @@ import st from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   const { moviesId } = useParams();
-  const match = useRouteMatch();
+  const { url, path } = useRouteMatch();
+  const { state } = useLocation();
+  const history = useHistory();
 
   const [movie, setMovie] = useState(null);
+
+  const handleClick = () => {
+    history.push(state?.from || '/');
+  };
 
   useEffect(() => {
     getMovieDetail(moviesId).then(setMovie);
@@ -31,18 +39,21 @@ const MovieDetailsPage = () => {
       {movie && (
         <Section>
           <Container>
+            <button type="button" onClick={handleClick}>
+              Go Bak
+            </button>
             <BookCard movie={movie} />
 
             <div>
               <NavLink
-                to={`${match.url}/cast`}
+                to={`${url}/cast`}
                 className={st.subViews}
                 activeClassName={st.active}
               >
                 Cast
               </NavLink>
               <NavLink
-                to={`${match.url}/reviews`}
+                to={`${url}/reviews`}
                 className={st.subViews}
                 activeClassName={st.active}
               >
@@ -54,11 +65,11 @@ const MovieDetailsPage = () => {
       )}
 
       <Switch>
-        <Route path={`${match.path}/cast`}>
+        <Route path={`${path}/cast`}>
           {movie && <Cast cast={movie.credits.cast} />}
         </Route>
 
-        <Route path={`${match.path}/reviews`}>
+        <Route path={`${path}/reviews`}>
           {movie && <Reviews reviews={movie.reviews.results} />}
         </Route>
       </Switch>
