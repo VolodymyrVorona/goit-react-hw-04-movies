@@ -1,13 +1,15 @@
 import st from './MovieCard.module.css';
+import defaultMoviePoster from '../../images/defaultMoviePoster.jpg';
 
 const BookCard = ({ movie }) => {
+  const img = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+    : defaultMoviePoster;
+
   return (
     <div className={st.wrapper}>
       <div>
-        <img
-          src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-          alt={movie.title}
-        />
+        <img src={img} alt={movie.title} width="300" />
       </div>
 
       <div className={st.contentWrapper}>
