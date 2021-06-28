@@ -16,8 +16,12 @@ import Container from '../../Components/Container';
 
 import st from './MovieDetailsPage.module.css';
 
-const Reviews = lazy(() => import('../../Components/Reviews'));
-const Cast = lazy(() => import('../../Components/Cast'));
+const Reviews = lazy(() =>
+  import('../../Components/Reviews' /* webpackChunkName: "reviews" */),
+);
+const Cast = lazy(() =>
+  import('../../Components/Cast' /* webpackChunkName: "cast" */),
+);
 
 const MovieDetailsPage = () => {
   const { moviesId } = useParams();

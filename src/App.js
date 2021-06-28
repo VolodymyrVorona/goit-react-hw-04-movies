@@ -8,9 +8,17 @@ import routes from './routes';
 // import MovieDetailsPage from './Pages/MovieDetailsPage';
 import AppBar from './Components/AppBar';
 
-const HomePage = lazy(() => import('./Pages/HomePage'));
-const MoviesPage = lazy(() => import('./Pages/MoviesPage'));
-const MovieDetailsPage = lazy(() => import('./Pages/MovieDetailsPage'));
+const HomePage = lazy(() =>
+  import('./Pages/HomePage' /* webpackChunkName: "home-page" */),
+);
+const MoviesPage = lazy(() =>
+  import('./Pages/MoviesPage' /* webpackChunkName: "movies-page" */),
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    './Pages/MovieDetailsPage' /* webpackChunkName: "movie-details-page" */
+  ),
+);
 
 function App() {
   return (
