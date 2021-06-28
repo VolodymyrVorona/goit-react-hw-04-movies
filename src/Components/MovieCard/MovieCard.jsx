@@ -1,4 +1,4 @@
-import st from './BookCard.module.css';
+import st from './MovieCard.module.css';
 
 const BookCard = ({ movie }) => {
   return (

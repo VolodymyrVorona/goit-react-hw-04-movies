@@ -1,10 +1,11 @@
 import Section from '../Section';
 import Container from '../Container';
 
+import defaultActorAvatar from '../../images/defaultActorAvatar.svg';
+
 import st from './Cast.module.css';
 
 const Cast = ({ cast }) => {
-  console.log(cast);
   return (
     <>
       {cast && (
@@ -12,12 +13,13 @@ const Cast = ({ cast }) => {
           <Container>
             <ul className={st.list}>
               {cast.map(({ name, profile_path, character, id }) => {
+                const img = profile_path
+                  ? `https://image.tmdb.org/t/p/w200${profile_path}`
+                  : defaultActorAvatar;
+
                 return (
                   <li key={id} className={st.item}>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w200${profile_path}`}
-                      alt=""
-                    />
+                    <img src={img} alt={name} />
 
                     <p>{name}</p>
 

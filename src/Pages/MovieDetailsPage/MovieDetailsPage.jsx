@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import {
   useParams,
   useRouteMatch,
@@ -10,13 +10,14 @@ import {
 } from 'react-router-dom';
 
 import { getMovieDetail } from '../../api/fetchMovies';
-import BookCard from '../../Components/BookCard';
-import Cast from '../../Components/Cast';
-import Reviews from '../../Components/Reviews';
+import MovieCard from '../../Components/MovieCard';
 import Section from '../../Components/Section';
 import Container from '../../Components/Container';
 
 import st from './MovieDetailsPage.module.css';
+
+const Reviews = lazy(() => import('../../Components/Reviews'));
+const Cast = lazy(() => import('../../Components/Cast'));
 
 const MovieDetailsPage = () => {
   const { moviesId } = useParams();
@@ -42,7 +43,7 @@ const MovieDetailsPage = () => {
             <button type="button" onClick={handleClick}>
               Go Bak
             </button>
-            <BookCard movie={movie} />
+            <MovieCard movie={movie} />
 
             <div>
               <NavLink
@@ -64,15 +65,17 @@ const MovieDetailsPage = () => {
         </Section>
       )}
 
-      <Switch>
-        <Route path={`${path}/cast`}>
-          {movie && <Cast cast={movie.credits.cast} />}
-        </Route>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path={`${path}/cast`}>
+            {movie && <Cast cast={movie.credits.cast} />}
+          </Route>
 
-        <Route path={`${path}/reviews`}>
-          {movie && <Reviews reviews={movie.reviews.results} />}
-        </Route>
-      </Switch>
+          <Route path={`${path}/reviews`}>
+            {movie && <Reviews reviews={movie.reviews.results} />}
+          </Route>
+        </Switch>
+      </Suspense>
     </>
   );
 };
