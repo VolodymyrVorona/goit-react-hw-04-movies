@@ -6,11 +6,10 @@ import { fetchMoviesByKeyword } from '../../api/fetchMovies';
 
 import Form from '../../Components/Form';
 import MovieList from '../../Components/MovieList';
-import Section from '../../Components/Section';
-import Container from '../../Components/Container';
 
 const MoviesPage = () => {
   const history = useHistory();
+
   const { query } = queryString.parse(history.location.search);
 
   const [filmTitle, setFilmTitle] = useState(query || '');
@@ -35,13 +34,11 @@ const MoviesPage = () => {
   }, [filmTitle, history]);
 
   return (
-    <Section>
-      <Container>
-        <Form onSubmit={handleSubmit} />
+    <>
+      <Form onSubmit={handleSubmit} />
 
-        <MovieList movies={movies} />
-      </Container>
-    </Section>
+      <MovieList movies={movies} />
+    </>
   );
 };
 

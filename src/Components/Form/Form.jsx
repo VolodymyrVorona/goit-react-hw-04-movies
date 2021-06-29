@@ -1,7 +1,14 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import Section from '../Section';
+import Container from '../Container';
+
+import queryString from 'query-string';
 
 const Form = ({ onSubmit }) => {
-  const [value, setValue] = useState('');
+  const history = useHistory();
+  const { query } = queryString.parse(history.location.search);
+  const [value, setValue] = useState(query || '');
 
   const handleChange = e => {
     setValue(e.currentTarget.value.toLowerCase());
@@ -18,15 +25,17 @@ const Form = ({ onSubmit }) => {
   };
 
   return (
-    <>
-      <p>Find Movie</p>
+    <Section>
+      <Container>
+        <p>Find Movie</p>
 
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="" value={value} onChange={handleChange} />
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="" value={value} onChange={handleChange} />
 
-        <button type="submit">SEARCH</button>
-      </form>
-    </>
+          <button type="submit">SEARCH</button>
+        </form>
+      </Container>
+    </Section>
   );
 };
 

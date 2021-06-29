@@ -47,18 +47,25 @@ const MovieDetailsPage = () => {
             <button type="button" onClick={handleClick}>
               Go Bak
             </button>
+
             <MovieCard movie={movie} />
 
             <div>
               <NavLink
-                to={`${url}/cast`}
+                to={{
+                  pathname: `${url}/cast`,
+                  state,
+                }}
                 className={st.subViews}
                 activeClassName={st.active}
               >
                 Cast
               </NavLink>
               <NavLink
-                to={`${url}/reviews`}
+                to={{
+                  pathname: `${url}/reviews`,
+                  state,
+                }}
                 className={st.subViews}
                 activeClassName={st.active}
               >
