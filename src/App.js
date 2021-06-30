@@ -3,9 +3,7 @@ import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import routes from './routes';
-// import HomePage from './Pages/HomePage';
-// import MoviesPage from './Pages/MoviesPage';
-// import MovieDetailsPage from './Pages/MovieDetailsPage';
+
 import AppBar from './Components/AppBar';
 
 const HomePage = lazy(() =>
