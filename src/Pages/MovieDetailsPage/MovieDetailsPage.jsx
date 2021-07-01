@@ -3,7 +3,7 @@ import {
   useParams,
   useRouteMatch,
   useLocation,
-  NavLink,
+  // NavLink,
   useHistory,
   Route,
   Switch,
@@ -13,8 +13,8 @@ import { getMovieDetail } from '../../api/fetchMovies';
 import MovieCard from '../../Components/MovieCard';
 import Section from '../../Components/Section';
 import Container from '../../Components/Container';
-
-import st from './MovieDetailsPage.module.css';
+import GoBackBtn from '../../Components/GoBackBtn/GoBackBtn';
+import SubNav from '../../Components/SubNav';
 
 const Reviews = lazy(() =>
   import('../../Components/Reviews' /* webpackChunkName: "reviews" */),
@@ -25,7 +25,7 @@ const Cast = lazy(() =>
 
 const MovieDetailsPage = () => {
   const { moviesId } = useParams();
-  const { url, path } = useRouteMatch();
+  const { path } = useRouteMatch();
   const { state } = useLocation();
   const history = useHistory();
 
@@ -44,34 +44,9 @@ const MovieDetailsPage = () => {
       {movie && (
         <Section>
           <Container>
-            <button type="button" onClick={handleClick}>
-              Go Bak
-            </button>
-
+            <GoBackBtn onBtnClick={handleClick} label={'Go Back'} />
             <MovieCard movie={movie} />
-
-            <div>
-              <NavLink
-                to={{
-                  pathname: `${url}/cast`,
-                  state,
-                }}
-                className={st.subViews}
-                activeClassName={st.active}
-              >
-                Cast
-              </NavLink>
-              <NavLink
-                to={{
-                  pathname: `${url}/reviews`,
-                  state,
-                }}
-                className={st.subViews}
-                activeClassName={st.active}
-              >
-                Reviews
-              </NavLink>
-            </div>
+            <SubNav />
           </Container>
         </Section>
       )}
